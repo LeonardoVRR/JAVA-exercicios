@@ -1,0 +1,133 @@
+package uscs;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class CursoDAO {
+	
+	public void save (Curso curso) {
+		String sql = "INSERT INTO tabcurso(codcurso, nomecurso) VALUES (?, ?)";
+		
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		
+		try {
+			conn = ConnectionFactory.createConnectionToMySQL();
+			
+			pstm = conn.prepareStatement(sql);
+			
+			pstm.setInt(1, curso.getCodCurso());
+			pstm.setString(2, curso.getNomeCurso());
+			
+			pstm.execute();
+			System.out.println("Curso registrado com sucesso!!!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstm != null) {
+					pstm.close();
+				}
+				
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public List<Curso> getCursos(){
+		String sql = "SELECT * FROM TABCURSO";
+		
+		List<Curso> cursos = new ArrayList<>();
+		
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		
+		ResultSet rset = null;
+		
+		try {
+			conn = ConnectionFactory.createConnectionToMySQL();
+			
+			pstm = conn.prepareStatement(sql);
+			
+			rset = pstm.executeQuery();
+			
+			while (rset.next()) {
+				Curso curso = new Curso();
+				
+				curso.setCodCurso(rset.getInt("codcurso"));
+				curso.setNomeCurso(rset.getString("nomecurso"));
+				
+				cursos.add(curso);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		  } finally {
+			  
+			  try {
+				  
+				  if (rset != null) {
+						rset.close();
+					}
+				  
+					if (pstm != null) {
+						pstm.close();
+					}
+					
+					if (conn != null) {
+						conn.close();
+					}
+				} catch (Exception e){
+					e.printStackTrace();
+				}
+			  
+		  }
+		
+		return cursos;
+		}
+	
+	public void update(Curso curso) {
+		String sql = "UPDATE tabcurso SET nomecurso = ?" + "WHERE codcurso = ?";
+		
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		
+		try {
+			conn = ConnectionFactory.createConnectionToMySQL();
+			
+			pstm = conn.prepareStatement(sql);
+			
+			pstm.setString(1, curso.getNomeCurso());
+			
+			pstm.setInt(2, curso.getCodCurso());
+			
+			pstm.execute();
+			System.out.println("Alteração realizada com sucesso!!!");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstm != null) {
+					pstm.close();
+				}
+				
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+}

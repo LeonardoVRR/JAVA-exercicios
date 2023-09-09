@@ -1,0 +1,9 @@
+package uscs;
+
+public class CursoDAO {
+	
+	public void save (Curso curso) {
+		String sql = "INSERT INTO tabcurso(codcurso, nomecurso) VALUES (?, ?)";
+	}
+	
+}

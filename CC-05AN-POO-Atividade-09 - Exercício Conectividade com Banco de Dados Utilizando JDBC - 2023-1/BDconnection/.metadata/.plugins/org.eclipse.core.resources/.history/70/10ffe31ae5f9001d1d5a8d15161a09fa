@@ -1,0 +1,15 @@
+package uscs;
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		
+		
+		//atualizar nome do curso registrado no BD
+		Curso cursoUPDATE = new Curso();
+		cursoUPDATE.setNomeCurso("Fisica");
+		cursoUPDATE.setCodCurso(1);
+	}
+
+}

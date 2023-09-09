@@ -1,0 +1,32 @@
+package uscs;
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		//adicionar novos cursos ao BD
+		Curso curso = new Curso();
+		curso.setCodCurso(4);
+		curso.setNomeCurso("Historia");
+		
+		//salvar os cursos no BD
+		CursoDAO cursoDAO = new CursoDAO();
+		cursoDAO.save(curso);
+		
+		//visualizar os cursos registrados no BD
+		for(Curso c : cursoDAO.getCursos()) {
+			System.out.println("Codigo do Curso: " + c.getCodCurso() + "\nCurso: " + c.getNomeCurso() + "\n");
+		}
+		
+		//atualizar nome do curso registrado no BD
+		Curso cursoUPDATE = new Curso();
+		cursoUPDATE.setNomeCurso("Fisica");
+		cursoUPDATE.setCodCurso(1);
+		
+		//cursoDAO.update(cursoUPDATE);
+		
+		//deletar cursos do BD
+		cursoDAO.delete(2);
+	}
+
+}

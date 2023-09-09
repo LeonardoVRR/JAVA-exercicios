@@ -1,0 +1,41 @@
+package uscs;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+
+public class CursoDAO {
+	
+	public void save (Curso curso) {
+		String sql = "INSERT INTO tabcurso(codcurso, nomecurso) VALUES (?, ?)";
+		
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		
+		try {
+			conn = ConnectionFactory.createConnectionToMySQL();
+			
+			pstm = conn.prepareStatement(sql);
+			
+			pstm.setInt(1, curso.getCodCurso());
+			pstm.setString(2, curso.getNomeCurso());
+			
+			pstm.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstm != null) {
+					pstm.close();
+				}
+				
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+		}
+	}
+	
+}
